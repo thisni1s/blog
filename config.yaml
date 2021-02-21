@@ -3,7 +3,7 @@ baseUrl: "https://blog.kempen.xyz"
 title: "blog.kempen.xyz"
 theme: "anubis"
 paginate: 10
-enableRobotsTXT: true
+enableRobotsTXT: false
 
 menu:
   main:
