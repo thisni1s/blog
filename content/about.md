@@ -9,10 +9,12 @@ Hello I am Nils and this is my blog.
 
 ### Impressum
 Angaben gemäß § 5 TMG & Redaktionell Verantwortlicher
-Nils Kempen
-Kirchspielweg 4
-47877 Willich
-E-Mail: kontakt@kempen.xyz
+
+Nils Kempen  
+Kirchspielweg 4  
+47877 Willich  
+E-Mail: kontakt@kempen.xyz  
+
 Quelle: https://www.e-recht24.de
 
 # Datenschutzerklärung
@@ -36,9 +38,9 @@ Stand: 21. Februar 2021
 
 ## Verantwortlicher {#m3}
 
-Nils Kempen
-Kirchspielweg 4
-47877 Willich
+Nils Kempen  
+Kirchspielweg 4  
+47877 Willich  
 
 E-Mail-Adresse: kontakt@kempen.xyz
 
