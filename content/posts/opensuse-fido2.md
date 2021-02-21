@@ -1,7 +1,7 @@
 ---
 title: "OpenSuse FIDO2 Login"
 date: 2021-02-21T12:57:54+01:00
-draft: true
+draft: false
 toc: false
 images:
 tags:

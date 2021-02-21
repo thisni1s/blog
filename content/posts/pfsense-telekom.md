@@ -2,6 +2,8 @@
 title: "Pfsense Telekom"
 date: 2020-03-14T17:56:55+01:00
 draft: false
+tags:
+  - pfsense
 ---
 
 # Pfsense anmeldung bei der Telekom mit PPPoE

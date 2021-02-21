@@ -1,7 +1,12 @@
 ---
 title: "Nutzung von U2F USB Keys unter Linux"
 date: 2020-02-16T18:00:52+01:00
-draft: true
+draft: false
+tags:
+  - linux
+  - fido2
+  - u2f
+  - opensuse
 ---
 
 Viele U2F-Keys werden nicht nativ in Linux unterstützt, hier ein kurzer
