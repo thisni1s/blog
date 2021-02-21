@@ -1,6 +1,6 @@
 languageCode: "de-DE"
 baseUrl: "https://blog.kempen.xyz"
-title: "kempen.xyz"
+title: "blog.kempen.xyz"
 theme: "anubis"
 paginate: 10
 enableRobotsTXT: true
@@ -21,7 +21,7 @@ menu:
 
 params:
   author: "Nils Kempen"
-  email: blog@kempen.xyz # used for microformats
+  email: kontakt@kempen.xyz # used for microformats
   avatar: "/images/me.png" # used for microformats
   description: ""
   images:
