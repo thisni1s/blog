@@ -82,8 +82,11 @@ die Vendorid und die Productid. Mit deren Hilfe fügen wir der Liste
 einen neuen Eintrag hinzu. Öffnet die Liste mit dem Texteditor eurer
 Wahl und fügt diese Zeilen hinzu:
 
-    # Name eures Keys
-    KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="2ccf", ATTRS{idProduct}=="0880", TAG+="uaccess", GROUP="plugdev", MODE="0660"
+``` shell
+# Name eures Keys
+KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="2ccf", ATTRS{idProduct}=="0880", TAG+="uaccess", GROUP="plugdev", MODE="0660"
+```
+
 
 Wichtig ist natürlich, dass ihr `2ccf` und `0880` durch eure Vendorid
 und Productid austauscht.
