@@ -23,7 +23,7 @@ Als Parent Interface, muss das Interface ausgewählt werden, dass mit dem
 Modem verbunden ist. Der VLAN Tag ist 7. Am Ende kann noch eine
 Beschreibung hinzugefügt werden.
 
-![VLAN Erstellung](/resources/_gen/images/vlan.png)
+![VLAN Erstellung](/static/vlan.png)
 
 ## PPPoE Interace erstellen
 
@@ -39,7 +39,7 @@ mitgeschickt hat.
 Mit einem Klick auf `Display Advanced` kann noch der Periodic Reset
 eingestellt werden.
 
-![PPPoE Erstellung](/resources/_gen/images/pppoe.png)
+![PPPoE Erstellung](/static/pppoe.png)
 
 ## Interface zuweisen
 

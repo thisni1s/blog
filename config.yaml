@@ -4,6 +4,7 @@ title: "blog.kempen.xyz"
 theme: "anubis"
 paginate: 10
 enableRobotsTXT: false
+staticDir: static
 
 menu:
   main:
