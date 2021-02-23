@@ -37,8 +37,10 @@ params:
   utterancesIssue: "" # optional
   utterancesLabel: "" # optional
   webmentions:
+    url: https://jn2p.de/webmentions 	
     login: hugo-theme-anubis
     pingback: true
+
 
 markup:
   goldmark:
