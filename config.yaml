@@ -38,6 +38,7 @@ params:
   utterancesLabel: "" # optional
   webmentions:
     url: https://jn2p.de/webmentions 	
+    widget: https://jn2p.de/webmentions/ui/dist/widget.js	
     login: hugo-theme-anubis
     pingback: true
 
