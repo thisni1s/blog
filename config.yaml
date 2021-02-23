@@ -24,7 +24,7 @@ menu:
   - identifier: replies
     name: Replies
     title: Replies
-    url: /replies/
+    url: /tags/reply
     weight: 2
 
 
