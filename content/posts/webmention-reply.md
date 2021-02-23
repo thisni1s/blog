@@ -6,4 +6,8 @@ draft: true
 
 <a class="u-in-reply-to" href="https://blog.kempen.xyz/posts/opensuse-fido2/">@nils</a>
 
+Heftig am verlinken
+https://blog.kempen.xyz/posts/opensuse-fido2
+https://blog.kempen.xyz/posts/opensuse-fido2
+
 Das ist ein test!!
