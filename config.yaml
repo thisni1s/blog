@@ -6,6 +6,9 @@ paginate: 10
 enableRobotsTXT: false
 staticDir: static
 
+author:
+  name: "Nils Kempen"
+
 menu:
   main:
   - identifier: archive
@@ -24,7 +27,7 @@ params:
   author: "Nils Kempen"
   email: kontakt@kempen.xyz # used for microformats
   avatar: "/images/me.png" # used for microformats
-  description: ""
+  description: "Student, terminal enthusiast"
   images:
     - images/og-featured.png # relative path to "static" directory
   dateFormat: "2006-01-02"
@@ -37,8 +40,8 @@ params:
   utterancesIssue: "" # optional
   utterancesLabel: "" # optional
   webmentions:
-    url: https://jn2p.de/webmentions 	
-    widget: https://jn2p.de/webmentions/ui/dist/widget.js	
+    url: https://jn2p.de/webmentions
+    widget: https://jn2p.de/webmentions/ui/dist/widget.js
     login: hugo-theme-anubis
     pingback: true
 
