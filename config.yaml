@@ -11,9 +11,9 @@ author:
 
 menu:
   main:
-  - identifier: archive
-    name: Archive
-    title: Archive
+  - identifier: posts
+    name: Posts
+    title: Posts
     url: /posts/
     weight: 0
   - identifier: about
