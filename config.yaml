@@ -21,6 +21,11 @@ menu:
     title: About
     url: /about/
     weight: 1
+  - identifier: replies
+    name: Replies
+    title: Replies
+    url: /replies/
+    weight: 2
 
 
 params:
