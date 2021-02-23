@@ -15,20 +15,21 @@ menu:
     name: Posts
     title: Posts
     url: /posts/
-    weight: 0
+    weight: 2
   - identifier: about
     name: About
     title: About
     url: /about/
-    weight: 1
+    weight: 0
   - identifier: replies
     name: Replies
     title: Replies
     url: /replies/
-    weight: 2
+    weight: 1
 
 
 params:
+  env: production
   author: "Nils Kempen"
   email: kontakt@kempen.xyz # used for microformats
   avatar: "/images/me.png" # used for microformats
