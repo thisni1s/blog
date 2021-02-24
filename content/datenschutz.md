@@ -2,6 +2,7 @@
 title: "Datenschutzerklärung"
 date: 2021-02-21T14:42:30+01:00
 draft: false
+disable_feed: true
 ---
 
 Stand: 21. Februar 2021
