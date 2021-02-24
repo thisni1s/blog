@@ -46,7 +46,7 @@ params:
   utterancesIssue: "" # optional
   utterancesLabel: "" # optional
   webmentions:
-    url: https://jn2p.de/webmentions
+    url: https://jn2p.de/webmentions/receive
     widget: https://jn2p.de/webmentions/ui/dist/widget.js
 
 
