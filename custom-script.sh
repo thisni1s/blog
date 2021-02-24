@@ -11,4 +11,9 @@ echo '
 
 {{ end }}
 
+' > themes/anubis/layouts/partials/pagination-extra.html
+
+echo '
+<a href="/impressum/">Impressum</a> | <a href="/datenschutz/">Datenschutz</a>
+
 ' > themes/anubis/layouts/partials/footer-extra.html
