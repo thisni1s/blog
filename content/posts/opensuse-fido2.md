@@ -8,6 +8,7 @@ tags:
   - linux
   - fido2
   - opensuse
+  - lang:english
 ---
 
 ## Register the keys

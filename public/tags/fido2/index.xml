@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>fido2 on kempen.xyz</title>
+    <link>https://kempen.xyz/tags/fido2/</link>
+    <description>kempen.xyz (fido2)</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>de-DE</language>
+    <lastBuildDate>Sun, 21 Feb 2021 12:57:54 +0100</lastBuildDate>
+    
+    <atom:link href="https://kempen.xyz/tags/fido2/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>OpenSuse FIDO2 Login</title>
+      <link>https://kempen.xyz/posts/opensuse-fido2/</link>
+      <pubDate>Sun, 21 Feb 2021 12:57:54 +0100</pubDate>
+      
+      <guid>https://kempen.xyz/posts/opensuse-fido2/</guid>
+      <description>&lt;h2 id=&#34;register-the-keys&#34;&gt;Register the keys&lt;/h2&gt;
+&lt;p&gt;First make sure you have the &lt;code&gt;pam_u2f&lt;/code&gt; packet installed and that its version is at least 1.1.0.
+After installing it you should be able to call &lt;code&gt;pamu2fcfg&lt;/code&gt;. This is what we use to register our keys.
+Because OpenSuse uses the root password for sudo by default we have to register the key not only for ourselves but also for the root user. To do that we run &lt;code&gt;pamu2fcfg&lt;/code&gt;. You first have to enter your authenticator pin and touch it afterwards. The result should look like this:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;nils:&amp;lt;keyhandle&amp;gt;,&amp;lt;userkey&amp;gt;,es256,+presence&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;You should save the output for later and run the command again but this time as root with sudo. Again you should save the output.
+Now create a new file &lt;code&gt;/etc/u2f_mappings&lt;/code&gt;. This file contains the information of our registered keys an looks like this:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;username1&amp;gt;:&amp;lt;KeyHandle1&amp;gt;,&amp;lt;UserKey1&amp;gt;,&amp;lt;Options1&amp;gt;:&amp;lt;KeyHandle2&amp;gt;,&amp;lt;UserKey2&amp;gt;,&amp;lt;Options2&amp;gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;username2&amp;gt;:&amp;lt;KeyHandle1&amp;gt;,&amp;lt;UserKey1&amp;gt;,&amp;lt;Options1&amp;gt;:&amp;lt;KeyHandle2&amp;gt;,&amp;lt;UserKey2&amp;gt;,&amp;lt;Options2&amp;gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;We paste in the outputs saved earlier and &lt;strong&gt;add a colon at the end of each line&lt;/strong&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;configure-pam&#34;&gt;Configure PAM&lt;/h2&gt;
+&lt;p&gt;Now we can configure PAM to use pam_u2f for authentication.
+In Tubleweed pam configuration files are stored under &lt;code&gt;/etc/pam.d/&lt;/code&gt; and &lt;code&gt;/usr/etc/pam.d/&lt;/code&gt;. We then find a program we want to use U2F with and edit its configuration file. For sudo that would be &lt;code&gt;/usr/etc/pam.d/sudo&lt;/code&gt;. Open it and add the U2F config at the top:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;sudo vim /usr/etc/pam.d/sudo&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Add this line: &lt;code&gt;auth sufficient pam_u2f.so authfile=/etc/u2f_mappings cue pinverification=1&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;The result should look similar to this.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#%PAM-1.0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;auth sufficient pam_u2f.so authfile&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;/etc/u2f_mappings cue pinverification&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;auth     include        common-auth
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;account  include        common-account
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;password include        common-password
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;session  optional       pam_keyinit.so revoke
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;session  include        common-session
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Other config files worth changing are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;/etc/pam.d/sddm - Login at boot&lt;/li&gt;
+&lt;li&gt;/usr/etc/pam.d/kde - Screen unlocking in KDE&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Any changes to these files should take immediate affect and you should be able to use your FIDO2 key for authentication.&lt;/p&gt;
+&lt;h4 id=&#34;ressources&#34;&gt;Ressources&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://smart-tux.de/post/pam-u2f/&#34;&gt;https://smart-tux.de/post/pam-u2f/&lt;/a&gt; - Guide for Fedora&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://developers.yubico.com/pam-u2f/&#34;&gt;https://developers.yubico.com/pam-u2f/&lt;/a&gt; - pam_u2f documentation&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://en.opensuse.org/SDB:Facial_authentication&#34;&gt;https://en.opensuse.org/SDB:Facial_authentication&lt;/a&gt; - SuSe guide for implementing face unlocking&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Nutzung von U2F USB Keys unter Linux</title>
+      <link>https://kempen.xyz/posts/linux-fido2-udev/</link>
+      <pubDate>Sun, 16 Feb 2020 18:00:52 +0100</pubDate>
+      
+      <guid>https://kempen.xyz/posts/linux-fido2-udev/</guid>
+      <description>&lt;p&gt;Viele U2F-Keys werden nicht nativ in Linux unterstützt, hier ein kurzer
+Guide wie man seinen U2F-Key in Linux einbindet. Ich benutze hier
+OpenSUSE Tubleweed.&lt;/p&gt;
+&lt;h2 id=&#34;auf-udev-prüfen&#34;&gt;Auf Udev prüfen&lt;/h2&gt;
+&lt;p&gt;Zuerst finde ich heraus ob meine Distribution Udev benutzt. Dazu unter
+OpenSUSE folgenden Befehl ins Terminal eingeben:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;zypper &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; udev
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Wichtig ist, dass im Output bei &lt;code&gt;Installiert: Ja&lt;/code&gt; steht, und die Version
+mindestens 188 oder höher ist.&lt;/p&gt;
+&lt;h2 id=&#34;udev-regel-anlegen&#34;&gt;Udev Regel anlegen&lt;/h2&gt;
+&lt;p&gt;Wir fügen nun eine neue Udev Regel hinzu um unserer Distribution
+mitzuteilen wie sie mit dem U2F-Key umgehen soll. Zum Glück gibt es von
+Yubico schon eine fertige Udev Regel in der viele U2F-Keys bereits
+eingetragen sind. Diese könnt ihr
+&lt;a href=&#34;https://github.com/Yubico/libu2f-host/blob/master/70-u2f.rules&#34; title=&#34;Yubico Udev Liste&#34;&gt;&lt;em&gt;hier&lt;/em&gt;&lt;/a&gt;
+herunterladen. Die Liste ist gut kommentiert und Ihr solltet erst einmal
+gucken ob ihr eurer U2F Gerät bereits dort findet. Wenn es bereits in
+der Liste steht könnt ihr den nächsten Schritt überspringen.&lt;/p&gt;
+&lt;h3 id=&#34;neues-gerät-der-liste-hinzufügen&#34;&gt;Neues Gerät der Liste hinzufügen&lt;/h3&gt;
+&lt;p&gt;Mein U2F-Stick war bereits auf der Liste eingetragen. Ist eurer nicht
+eingetragen müsst ihr der Liste einen weiteren Eintrag hinzufügen. Dazu
+gebt ihr folgenden Befehl im Terminal ein, ohne den U2F-Stick
+eingesteckt zu haben.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;lsusb
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Bus &lt;span style=&#34;color:#ae81ff&#34;&gt;002&lt;/span&gt; Device 002: ID 05e3:0620 Genesys Logic, Inc.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Bus &lt;span style=&#34;color:#ae81ff&#34;&gt;002&lt;/span&gt; Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Bus &lt;span style=&#34;color:#ae81ff&#34;&gt;001&lt;/span&gt; Device 006: ID 08bb:27c4 Texas Instruments PCM2704C stereo audio DAC
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Bus &lt;span style=&#34;color:#ae81ff&#34;&gt;001&lt;/span&gt; Device 005: ID 05e3:0610 Genesys Logic, Inc. 4-port hub
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Bus &lt;span style=&#34;color:#ae81ff&#34;&gt;001&lt;/span&gt; Device 004: ID 1397:0507 BEHRINGER International GmbH
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Bus &lt;span style=&#34;color:#ae81ff&#34;&gt;001&lt;/span&gt; Device 003: ID 046a:010d Cherry GmbH MX-Board 3.0 Keyboard
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Bus &lt;span style=&#34;color:#ae81ff&#34;&gt;001&lt;/span&gt; Device 002: ID 04d9:a079 Holtek Semiconductor, Inc.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Bus &lt;span style=&#34;color:#ae81ff&#34;&gt;001&lt;/span&gt; Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Und den Selben Befehl nochmal mit eingestecktem Stick:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;lsusb
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Bus &lt;span style=&#34;color:#ae81ff&#34;&gt;002&lt;/span&gt; Device 002: ID 05e3:0620 Genesys Logic, Inc.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Bus &lt;span style=&#34;color:#ae81ff&#34;&gt;002&lt;/span&gt; Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Bus &lt;span style=&#34;color:#ae81ff&#34;&gt;001&lt;/span&gt; Device 006: ID 08bb:27c4 Texas Instruments PCM2704C stereo audio DAC
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Bus &lt;span style=&#34;color:#ae81ff&#34;&gt;001&lt;/span&gt; Device 005: ID 05e3:0610 Genesys Logic, Inc. 4-port hub
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Bus &lt;span style=&#34;color:#ae81ff&#34;&gt;001&lt;/span&gt; Device 004: ID 1397:0507 BEHRINGER International GmbH
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Bus &lt;span style=&#34;color:#ae81ff&#34;&gt;001&lt;/span&gt; Device 003: ID 046a:010d Cherry GmbH MX-Board 3.0 Keyboard
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Bus &lt;span style=&#34;color:#ae81ff&#34;&gt;001&lt;/span&gt; Device 002: ID 04d9:a079 Holtek Semiconductor, Inc.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Bus &lt;span style=&#34;color:#ae81ff&#34;&gt;001&lt;/span&gt; Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Wenn man beide Ausgaben betrachtet erkennt man, den Eintrag den der
+U2F-Stick erzeugt hat. In diesem Fall:
+&lt;code&gt;Bus 001 Device 011: ID 2ccf:0880&lt;/code&gt;. Die beiden Hex Zahlen am ende sind
+die Vendorid und die Productid. Mit deren Hilfe fügen wir der Liste
+einen neuen Eintrag hinzu. Öffnet die Liste mit dem Texteditor eurer
+Wahl und fügt diese Zeilen hinzu:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Name eures Keys&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;KERNEL&lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;hidraw*&amp;#34;&lt;/span&gt;, SUBSYSTEM&lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;hidraw&amp;#34;&lt;/span&gt;, ATTRS&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;idVendor&lt;span style=&#34;color:#f92672&#34;&gt;}==&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;2ccf&amp;#34;&lt;/span&gt;, ATTRS&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;idProduct&lt;span style=&#34;color:#f92672&#34;&gt;}==&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;0880&amp;#34;&lt;/span&gt;, TAG&lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;uaccess&amp;#34;&lt;/span&gt;, GROUP&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;plugdev&amp;#34;&lt;/span&gt;, MODE&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;0660&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Wichtig ist natürlich, dass ihr &lt;code&gt;2ccf&lt;/code&gt; und &lt;code&gt;0880&lt;/code&gt; durch eure Vendorid
+und Productid austauscht.&lt;/p&gt;
+&lt;h3 id=&#34;liste-speichern&#34;&gt;Liste speichern&lt;/h3&gt;
+&lt;p&gt;Die gespeicherte Liste muss nun in den Richtigen Ordner verschoben
+werden. Angenommen sie liegt in eurem Downloads Ordner gebt ihr
+folgendes ein:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo mv ~/Downloads/70-u2f.rules /etc/udev/rules.d/70-u2f.rules
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Und das wars. Nun solltet ihr euren U2F-Key nutzen können!&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

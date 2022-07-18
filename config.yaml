@@ -1,6 +1,6 @@
 languageCode: "de-DE"
-baseUrl: "https://blog.kempen.xyz"
-title: "blog.kempen.xyz"
+baseUrl: "https://kempen.xyz"
+title: "kempen.xyz"
 theme: "anubis"
 paginate: 10
 enableRobotsTXT: false

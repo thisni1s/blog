@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Replies on kempen.xyz</title>
+    <link>https://kempen.xyz/replies/</link>
+    <description>kempen.xyz (Replies)</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>de-DE</language>
+    <lastBuildDate>Tue, 23 Feb 2021 13:26:08 +0100</lastBuildDate>
+    
+    <atom:link href="https://kempen.xyz/replies/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Webmention Reply</title>
+      <link>https://kempen.xyz/replies/webmention-reply/</link>
+      <pubDate>Tue, 23 Feb 2021 13:26:08 +0100</pubDate>
+      
+      <guid>https://kempen.xyz/replies/webmention-reply/</guid>
+      <description>&lt;p&gt;&lt;a class=&#34;u-in-reply-to&#34; href=&#34;https://blog.kempen.xyz/posts/opensuse-fido2/&#34;&gt;@nils&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Heftig am verlinken
+&lt;a href=&#34;https://blog.kempen.xyz/posts/opensuse-fido2&#34;&gt;https://blog.kempen.xyz/posts/opensuse-fido2&lt;/a&gt;
+&lt;a href=&#34;https://blog.kempen.xyz/posts/opensuse-fido2&#34;&gt;https://blog.kempen.xyz/posts/opensuse-fido2&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Das ist ein test!!&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

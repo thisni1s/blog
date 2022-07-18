@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>pfsense on kempen.xyz</title>
+    <link>https://kempen.xyz/tags/pfsense/</link>
+    <description>kempen.xyz (pfsense)</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>de-DE</language>
+    <lastBuildDate>Sat, 14 Mar 2020 17:56:55 +0100</lastBuildDate>
+    
+    <atom:link href="https://kempen.xyz/tags/pfsense/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Pfsense Telekom</title>
+      <link>https://kempen.xyz/posts/pfsense-telekom/</link>
+      <pubDate>Sat, 14 Mar 2020 17:56:55 +0100</pubDate>
+      
+      <guid>https://kempen.xyz/posts/pfsense-telekom/</guid>
+      <description>&lt;h1 id=&#34;pfsense-anmeldung-bei-der-telekom-mit-pppoe&#34;&gt;Pfsense anmeldung bei der Telekom mit PPPoE&lt;/h1&gt;
+&lt;p&gt;Um die eigene Pfsense-Box mit dem Internet zu verbinden, muss man sich
+mithilfe von PPPoE bei der Telekom einloggen. Normalerweise muss ihr ein
+Modem vorgeschaltet sein, dass sich im Bridge Modus befindet. Mehrfaches
+einloggen per PPPoE ist bei der Telekom nicht mehr möglich.&lt;/p&gt;
+&lt;h2 id=&#34;vlan-anlegen&#34;&gt;VLAN anlegen&lt;/h2&gt;
+&lt;p&gt;Zunächst muss ein VLAN angelegt werden, da die Telekom das Internet mit
+der VLAN ID 7 tagged. Dafür klickt man auf
+&lt;code&gt;Interaces -&amp;gt; Assignments -&amp;gt; VLANs -&amp;gt; Add&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Als Parent Interface, muss das Interface ausgewählt werden, dass mit dem
+Modem verbunden ist. Der VLAN Tag ist 7. Am Ende kann noch eine
+Beschreibung hinzugefügt werden.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://kempen.xyz/vlan.png&#34; alt=&#34;VLAN Erstellung&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;pppoe-interace-erstellen&#34;&gt;PPPoE Interace erstellen&lt;/h2&gt;
+&lt;p&gt;Als nächstes muss ein PPPoE Interface erstellt werden. Dafür klickt man
+auf &lt;code&gt;Interfaces -&amp;gt; Assignments -&amp;gt; PPPs -&amp;gt; Add&lt;/code&gt;.&lt;br&gt;
+Der Link Type ist PPPoE, als Link Interface muss man das eben erstellte
+VLAN Interface auswählen. Der Username setzt sich zusammen aus der
+Anschlusskennung, der T-Online Nummer und der Mitbenutzernummer, direkt
+hintereinander geschrieben mit @t-online.de am Ende. Das Kennwort ist
+das Kennwort das die Telekom im Brief mit der Anschlusskennung
+mitgeschickt hat.&lt;/p&gt;
+&lt;p&gt;Mit einem Klick auf &lt;code&gt;Display Advanced&lt;/code&gt; kann noch der Periodic Reset
+eingestellt werden.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://kempen.xyz/pppoe.png&#34; alt=&#34;PPPoE Erstellung&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;interface-zuweisen&#34;&gt;Interface zuweisen&lt;/h2&gt;
+&lt;p&gt;Danach muss das PPPoE interface dem WAN Interface zugewiesen werden.
+Dafür geht man bei &lt;code&gt;Interaces -&amp;gt; Assignments&lt;/code&gt; und klickt bei WAN im
+Dropdown Menü auf das PPPoE Interface.&lt;/p&gt;
+&lt;p&gt;Nun auf &lt;code&gt;Save&lt;/code&gt; klicken und die Verbindung wird aufgebaut.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

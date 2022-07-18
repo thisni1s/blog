@@ -7,6 +7,7 @@ tags:
   - fido2
   - u2f
   - opensuse
+  - lang:german
 ---
 
 Viele U2F-Keys werden nicht nativ in Linux unterstützt, hier ein kurzer
